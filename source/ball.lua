@@ -25,9 +25,9 @@ function Ball.new(x, y, xspeed, yspeed, radius)
 	ball:addColliderCircle("main", radius, 0, 0)
 	ball:addImage("ball", bm_ball, math.random(1000)-1000, 1*(radius/32), 1*(radius/32), 0, 0, 100, 100)
 
-	function ball:onCollision(collider_name, other_object)
+	function ball:onCollision(collider, other_collider, other_object)
 		-- Process bounces
-		if other_object.name == "ball" or (other_object.name == "player" and collider_name == "main") then 
+		if other_object.name == "ball" then 
 			local contact_position = AdjustPosition(self, other_object)
 			local already_in_collision = false
 			for previous_key,previous_collision_object in pairs(self.data.in_collision_with) do

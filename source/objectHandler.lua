@@ -92,7 +92,7 @@ function objectHandler.CheckCollisions()
 							in_collision = collisionFunction:CircleRect(circle_x+circle.offset_x, circle_y+circle.offset_y, circle.radius, rectangle_x+rectangle.offset_x, rectangle_y+rectangle.offset_y, rectangle.width, rectangle.height)
 						end
 						-- if in_collision and debug then print("Collision Detected: ",key, other_key, love.timer.getTime()) end
-						if in_collision and collider.active then object:onCollision(other_collider_key, other_object) end
+						if in_collision and collider.active then object:onCollision(collider_key, other_collider_key, other_object) end
 					end
 				end
 			end
