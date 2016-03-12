@@ -139,5 +139,6 @@ end
 -- Remove an object from the objectHandler
 function objectHandler.Remove(object)
 	if debug then print("Removing Object: "..tostring(object.id)) end
+	objectHolder[object.id]:onDestroy()
 	objectHolder[object.id] = nil
 end
