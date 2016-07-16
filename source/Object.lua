@@ -2,21 +2,26 @@ Object = {}
 Object.__index = Object
 
 function Object.new(name)
+	Game.currentID = Game.currentID + 1
 	local object = {
 		name = name or "",
-		id = objectHandler.SetID(),
+		id = Game.currentID,
+		depth = 0,
 		x = 0,
 		y = 0,
-        colliders = {},
-        images = {},
-		data = {}
+		xspeed = 0,
+		yspeed = 0,
+        collider = nil,
+        image = nil,
 	}
 	local object = setmetatable(object, Object)
-	objectHandler.Add(object)
 	return object
 end
 
-function Object:onCollision(collider_name, other_object)
+function Object:onCreate(args)
+end
+
+function Object:onCollision(other_object)
 end
 
 function Object:onUpdate(dt)
@@ -43,7 +48,7 @@ end
 function Object:onDestroy()
 end
 
-function Object:addColliderCircle(name, radius, offset_x, offset_y, active)
+function Object:addColliderCircle(radius, offset_x, offset_y, active)
 	local collider = {
 		type = "circle",
 		active = active or true,
@@ -51,10 +56,10 @@ function Object:addColliderCircle(name, radius, offset_x, offset_y, active)
 		offset_x = offset_x or 0,
 		offset_y = offset_y or 0,
 	}
-	if self.colliders[name] == nil then self.colliders[name] = collider else print("Collider Name Already Exists") end
+	self.collider = collider
 end
 
-function Object:addColliderRectangle(name, width, height, offset_x, offset_y, active)
+function Object:addColliderRectangle(width, height, offset_x, offset_y, active)
 	local collider = {
 		type = "rectangle",
 		active = active or true,
@@ -63,31 +68,31 @@ function Object:addColliderRectangle(name, width, height, offset_x, offset_y, ac
 		width = width,
 		height = height,
 	}
-	if self.colliders[name] == nil then self.colliders[name] = collider else print("Collider Name Already Exists") end
+	self.collider = collider
 end
 
-function Object:removeCollider(name)
-	if self.colliders[name] ~= nil then self.colliders[name] = nil else print("Collider Doesn't Exist") end
+function Object:removeCollider()
+	self.collider = nil
 end
 
-function Object:addImage(name, image, depth, scale_x, scale_y, offset_x, offset_y, origin_x, origin_y, rotation, active)
+function Object:addImage(image, properties)
+	properties = properties or {}
 	local image = {
 		image = image,
-		offset_x = offset_x or 0,
-		offset_y = offset_y or 0,
-		origin_x = origin_x or 0,
-		origin_y = origin_y or 0,
-		scale_x = scale_x or 1,
-		scale_y = scale_y or 1,
-		rotation = rotation or 0,
-		depth = depth or 0,
-		active = active or true
+		offset_x = properties.offset_x or 0,
+		offset_y = properties.offset_y or 0,
+		origin_x = properties.origin_x or 0,
+		origin_y = properties.origin_y or 0,
+		scale_x = properties.scale_x or 1,
+		scale_y = properties.scale_y or 1,
+		rotation = properties.rotation or 0,
+		active = properties.active or true
 	}
-	if self.images[name] == nil then self.images[name] = image else print("Collider Name Already Exists") end
+	self.image = image
 end
 
 function Object:removeImage(name)
-	if self.images[name] ~= nil then self.images[name] = nil else print("Image Doesn't Exist") end
+	self.image = nil
 end
 
 
