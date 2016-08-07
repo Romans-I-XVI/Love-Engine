@@ -158,6 +158,8 @@ function Game:getInstanceByName(object_name)
 		for _, instance in pairs(self.Instances[object_name]) do
 			return instance
 		end
+	else
+		return nil
 	end
 end
 
@@ -176,7 +178,7 @@ end
 function Game:destroyInstance(instance)
 	if self.Instances[instance.name][instance.id] ~= nil then
 		instance:onDestroy()
-		table.remove(self.Instances[instance.name], instance.id)
+		self.Instances[instance.name][instance.id] = nil
 	end
 end
 

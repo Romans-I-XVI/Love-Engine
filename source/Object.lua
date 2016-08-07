@@ -5,7 +5,7 @@ function Object.new(name)
 	Game.currentID = Game.currentID + 1
 	local object = {
 		name = name or "",
-		id = Game.currentID,
+		id = tostring(Game.currentID),
 		depth = 0,
 		x = 0,
 		y = 0,
